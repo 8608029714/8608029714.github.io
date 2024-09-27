@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修仙增量放置游戏</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; }
+        #game { margin: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        button { margin-top: 10px; padding: 10px; font-size: 16px; }
+        h1 { color: #4CAF50; }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <h1>修仙增量放置游戏</h1>
+        <p>灵气: <span id="qi">0</span></p>
+        <button id="gainQi">修炼</button>
+        <h2>升级</h2>
+        <p>当前等级: <span id="level">1</span></p>
+        <p>升级所需灵气: <span id="upgradeCost">10</span></p>
+        <button id="upgrade">升级</button>
+    </div>
+
+    <script>
+        let qi = 0; // 当前灵气
+        let level = 1; // 当前等级
+        let upgradeCost = 10; // 升级所需灵气
+
+        // 修炼按钮事件
+        document.getElementById('gainQi').addEventListener('click', function() {
+            qi += 1; // 每次点击增加1点灵气
+            updateDisplay();
+        });
+
+        // 升级按钮事件
+        document.getElementById('upgrade').addEventListener('click', function() {
+            if (qi >= upgradeCost) {
+                qi -= upgradeCost; // 扣除灵气
+                level += 1; // 升级
+                upgradeCost = Math.floor(upgradeCost * 1.5); // 增加升级所需灵气
+                updateDisplay();
+            } else {
+                alert("灵气不足，无法升级！");
+            }
+        });
+
+        // 每秒自动增加灵气
+        setInterval(function() {
+            qi += 0.1; // 每秒增加0.1点灵气
+            updateDisplay();
+        }, 1000);
+
+        // 更新显示
+        function updateDisplay() {
+            document.getElementById('qi').innerText = qi.toFixed(1);
+            document.getElementById('level').innerText = level;
+            document.getElementById('upgradeCost').innerText = upgradeCost;
+        }
+    </script>
+</body>
+</html>
